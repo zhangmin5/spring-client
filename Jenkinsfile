@@ -12,7 +12,7 @@ pipeline {
 	        )]) {
             	script {
                   sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
-                  sh 'oc import-image java:8 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm'
+                  sh 'oc import-image java --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm'
                 }
 	        }
             script {
@@ -69,7 +69,7 @@ pipeline {
 		        	passwordVariable: 'PASSWORD',
 		          )]) {
                     sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
-                    sh 'oc new-app --name springclient \'java:8~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_MAIN_CLASS=hello.Application\''
+                    sh 'oc new-app --name springclient \'java~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_MAIN_CLASS=hello.Application\''
                   }
                 }
             }
