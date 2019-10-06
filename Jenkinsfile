@@ -73,7 +73,7 @@ pipeline {
 			script {
                 openshift.withCluster() {
                 	  sh 'oc project springclient-ns'
-                	  sh 'oc new-app \'redhat-openjdk-openshift:8~https://github.com/remkohdev/springclient\' --allow-missing-images --strategy=source --build-env=\'JAVA_MAIN_CLASS=hello.Application\' -l app=springclient'
+                	  sh 'oc new-app \'redhat-openjdk-openshift:8~https://github.com/remkohdev/spring-client\' --allow-missing-images --strategy=source --build-env=\'JAVA_MAIN_CLASS=hello.Application\' -l app=springclient'
                 }
             }
 		}
