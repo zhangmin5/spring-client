@@ -12,7 +12,7 @@ pipeline {
 	        )]) {
             	script {
                   sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
-                  sh 'oc import-image java:8 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --all --confirm'
+                  sh 'oc import-image java --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --all --confirm'
                 }
 	        }
             script {
