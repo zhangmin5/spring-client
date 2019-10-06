@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "208860a3-e29d-499c-a20b-1ff3a05ace01",
+		"name": "Personal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SpringClient",
+			"item": [
+				{
+					"name": "/hello",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/hello?name=pluto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"hello"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "pluto"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
