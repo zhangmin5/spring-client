@@ -12,7 +12,7 @@ pipeline {
 	        )]) {
             	script {
                   sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
-                  sh 'oc import-image redhat-openjdk-openshift:1.6 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6 --confirm'
+                  sh 'oc import-image openjdk18-openshift:latest --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm'
                 }
 	        }
             script {
@@ -36,16 +36,6 @@ pipeline {
           }
         }
       }
-	  stage('Checkout') {
-		steps {
-			echo 'Checkout source code'
-			checkout scm
-			script {
-			  def pom = readMavenPom file: 'pom.xml'
-			  def version = pom.version
-			}
-		}
-	  }  
 	  stage('Maven Build') {
 		steps {
 			echo 'Build jar file'
@@ -63,6 +53,7 @@ pipeline {
 	  		script {
 	  			openshift.withCluster() {
 	  				sh 'oc new-project springclient-ns'
+	  				sh 'oc project springclient-ns'
 	  			}
 	  		}
 	  	}
@@ -72,8 +63,7 @@ pipeline {
 			echo 'Deploy application'
 			script {
                 openshift.withCluster() {
-                	  sh 'oc project springclient-ns'
-                	  sh 'oc new-app \'redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --allow-missing-images --strategy=source --build-env=\'JAVA_MAIN_CLASS=hello.Application\' -l app=springclient'
+                	  sh 'oc new-app \'openjdk18-openshift~https://github.com/remkohdev/spring-client\' --strategy=source --build-env=\'JAVA_MAIN_CLASS=hello.Application\' -l app=springclient'
                 }
             }
 		}
