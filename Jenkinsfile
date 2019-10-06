@@ -12,7 +12,7 @@ pipeline {
 	        )]) {
             	script {
                   sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
-                  sh 'oc import-image redhat-openjdk-openshift:8 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm'
+                  sh 'oc import-image redhat-openjdk-openshift:8 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6 --confirm'
                 }
 	        }
             script {
@@ -73,7 +73,7 @@ pipeline {
 			script {
                 openshift.withCluster() {
                 	  sh 'oc project springclient-ns'
-                	  sh 'oc new-app \'redhat-openjdk-openshift:8~https://github.com/remkohdev/spring-client\' --allow-missing-images --strategy=source --build-env=\'JAVA_MAIN_CLASS=hello.Application\' -l app=springclient'
+                	  sh 'oc new-app \'redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --allow-missing-images --strategy=source --build-env=\'JAVA_MAIN_CLASS=hello.Application\' -l app=springclient'
                 }
             }
 		}
