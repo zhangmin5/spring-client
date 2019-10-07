@@ -28,45 +28,39 @@ pipeline {
     }
     stage('Maven Build') {
       steps {
-	echo 'Build jar file'
-	sh 'mvn clean install -DskipTests=true'
+		echo 'Build jar file'
+		sh 'mvn clean install -DskipTests=true'
       }
     }
     stage('Run Unit Tests') {
       steps {
         echo 'Run unit tests'
-	sh 'mvn test'
+		sh 'mvn test'
       }
     }
     stage('Create Project') {
       steps {
-	echo 'Create Project'
-	script {
-	  openshift.withCluster() {
-	    sh 'oc new-project springclient-ns'
-	    sh 'oc project springclient-ns'
-	    echo "Using project: ${openshift.project()}"
-	  }
-  	}
+		echo 'Create Project'
+		script {
+		    sh 'oc new-project springclient-ns'
+		    sh 'oc project springclient-ns'
+		    echo "Using project: ${openshift.project()}"
+	  	}
       }
     }
     stage('Deploy') {
       steps {
         echo 'Deploy application'
-	script {
-	  openshift.withCluster() {
-	    sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
-	  }
+		script {
+		    sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
         }
       }
     }
     stage('Expose') {
       steps {
-	echo 'Expose Route'
-	script {
-	  openshift.withCluster() {
-	    sh 'oc expose svc/springclient'
-	  }
+		echo 'Expose Route'
+		script {
+		    sh 'oc expose svc/springclient'
         }
       }
     }
