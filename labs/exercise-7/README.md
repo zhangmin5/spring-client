@@ -10,6 +10,7 @@
 2. Review Jenkinsfile,
 
 	* Review the Jenkinsfile that is included in the Spring Client repository,
+	* If you want an in-depth walk-through of the stages and steps in the Jenkinsfile, go to the [Indepth Review of the Jenkinsfile](indepth-review-jenkinsfile.md),
 
 
 3. Configure Jenkins
@@ -121,9 +122,9 @@
 
 ## Background 
 
-Jenkins agent pods, also known as slave pods, are deleted by default after the build completes or is stopped.
+When a build is run in Jenkins on OpenShift, a new build container is created at each run. Jenkins agent pods, also known as slave pods, are deleted by default after the build completes or is stopped.
 
-OpenShift Container Platform provides three images suitable for use as [Jenkins slaves](https://docs.openshift.com/container-platform/3.11/using_images/other_images/jenkins_slaves.html): the Base, Maven, and Node.js images. The first is a base image for Jenkins agents:
+The OpenShift Container Platform provides three images suitable for use as [Jenkins slaves](https://docs.openshift.com/container-platform/3.11/using_images/other_images/jenkins_slaves.html): a Base, Maven, and Node.js images. The first is a base image for all Jenkins agents:
 
 * It pulls in both the required tools (headless Java, the Jenkins JNLP client) and the useful ones (including git, tar, zip, and nss among others).
 * It establishes the JNLP agent as the entrypoint.
@@ -134,5 +135,31 @@ Two more images that extend the base image are also provided:
 * Maven v3.5 image
 * Node.js v8 image
 
+1. Jenkins Agent
+The Jenkinsfile pipeline starts with defining which image must be used by the current pipeline build, e.g.
 
+	```script
+	pipeline {
+		agent {
+			label 'maven'
+		}  
+	```
+
+2. Setup
+In the Setup stage, the pipeline logs into the OpenShift cluster using the credentials defined in the Jenkins Configuration named 'openshift-login-api-token'. The login API token is retrieved from the OpenShift web console. This is not the proper way to identify in the pipeline, because the API token will expire, so in the real environment, you will use the server certificate for instance. 
+
+The [Credentials Binding Plugin](https://jenkins.io/doc/pipeline/steps/credentials-binding/) uses the syntaxt `withCredentials` to bind the token value to the `PASSWORD` variable. There is a long list of bindings available, here the `usernamePassword` binding is used.
+
+	```script
+	withCredentials([usernamePassword(
+		  credentialsId: 'openshift-login-api-token', 
+		  usernameVariable: 'USERNAME',
+		  passwordVariable: 'PASSWORD',
+		)]) {
+	        sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
+	```
+
+The OpenShift endpoint, using the cluster domain and port, is also hardcoded here, probably also not how you would do it in a real environment.
+
+This will be updated in a future version, but for a workshop it is not crucial.
 
