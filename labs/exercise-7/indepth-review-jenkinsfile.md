@@ -8,9 +8,11 @@ The base image used to create a Jenkins slave container, includes the `oc` cli. 
 
 	```script
 	openshift.withCluster() {
-		
+
 	}
 	```
+
+I will work on writing a version using the OpenShift Jenkins Plugin. See the TODOs.
 
 ## Jenkins Agent
 The Jenkinsfile pipeline starts with defining which image must be used by the current pipeline build, e.g.
@@ -47,7 +49,31 @@ I used to have another line here,
 But it was not working as expected, and I need to revisit. I was expecting it to pull the base image and store it in the local registry, but I think instead it only creates an imageStream for the image. (Like I said, revisiting this as well).
 
 ## Delete Project
+I am using the `delete project` command to make sure all objects associated with the deployment are deleted. The problem with doing it this way, is that if there is no project with the specified name, this command will cause a pipeline error. 
+
+Another TODO, add an `openshift.selector().exists()` condition.
+
+## Maven Build
+## Unit Tests
+
+## Create Project
+See also the `delete project`.
+
+## Deploy
+The `--strategy=source` flag runs a Source-to-Image (S2I) deployment strategy. The `oc new-app` looks for a `<image name>~<git repo>` template to build the application image.
+
+The Source-to-Image (S2I) strategy uses a base image `redhat-openjdk-18/openjdk18-openshift`. The base image `Java S2I for OpenShift` uses the `/deployments` directory as the standard location of the deployments directory. In consequence, the Maven build artifect `hello.jar` is copied here. By default, S2I runs the openjdk18 image, which runs `https://github.com/fabric8io-images/java/blob/master/images/jboss/openjdk8/jdk/run-java.sh` to execute a Java application. To run a fat jar you have to specify the `JAVA_APP_JAR` environment var, or the deployment will break with a ClassNotFoundException for the main class. 
+
+	```script
+	sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
+	```
+
+The `--allow-missing-images` flag will download the image if it is not found in the local registry.
 
 
+## Expose
+By default, an OpenShift service is not publically accessible. A route needs to be exposed to make a service available to external requests.
 
-
+	```script
+	sh 'oc expose svc/springclient'
+	```
