@@ -32,7 +32,7 @@ To download all dependencies for development, run
 $ mvn dependency:copy-dependencies
 ```
 
-## Jenkins
+## Deployment
 
 The `Jenkinsfile` is written for a Source-to-Image (S2I) deployment to OpenShift 3.11.
 
@@ -42,3 +42,7 @@ Lab coming soon...
 ## Docs
 
 See [Java: Get Started with Spring Boot](https://medium.com/nycdev/big-java-get-booted-with-spring-1896055c3803) and [Java: Create a Spring MVC App with Tomcat and Maven](https://medium.com/nycdev/java-build-a-tomcat-web-app-with-maven-and-spring-fbc823fa9a37) for a tutorial on Spring Boot and Spring MVC.
+
+## TODO
+
+* Replace the 'oc' syntax for the [OpenShift command line interface (CLI)](https://docs.openshift.com/container-platform/3.11/cli_reference/index.html) by the syntax used for the [OpenShift Jenkins Pipeline (DSL) Plugin](https://github.com/openshift/jenkins-client-plugin).
