@@ -61,7 +61,16 @@
 	* Copy the token, we need it to create our Jenkins pipeline,
 
 
-5. Create a Multibranch Pipeline using Blue Ocean,
+5. Make sure a project `springclient-ns` exists in OpenShift,
+
+	* Before deploying the `spring-client` application, the Jenkinsfile defines a step to delete and create a project. The delete step causes an error when the project it tries to delete is missing, so make sure the project `springclient-ns` exists in OpenShift,
+	* Go to OpenShift > `Cluster Console`,
+	* Go to `Administration` > `Projects`,
+	* Filter projects by `springclient-ns`,
+	* If there is no such project, click `Create Project` to create it,
+	* ([See TODOs](../README.md))
+
+6. Create a Multibranch Pipeline using Blue Ocean,
 
 	* In the Jenkins Dashboard, click `Open Blue Ocean` to open the Blue Ocean editor,
 	* In the `Welcome to Jenkins` popup window, click the `Create a new Pipeline` button, or click the `New Pipeline` button,
@@ -102,6 +111,9 @@
 
 		![Jenkins - Error 2](../images/jenkins-error-2.png)
 
+	* Any update to the Github repository, e.g. a push to update the Jenkinsfile, source code of the Spring Boot application, or the README.md file, will trigger a new build of the pipeline,
+
+		![Jenkins - build trigger](../images/jenkins-build-trigger.png)
 
 	* If you're interested, review the pipeline settings:
     	* Click the Configure option,
