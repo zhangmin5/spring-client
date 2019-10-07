@@ -44,6 +44,7 @@
     	* For `Description` enter `openshift login api token`,
     	* Click `OK`,
 
+			![Jenkins Add Credentials](../images/jenkins-new-credentials.png)
 
 5. Create a Multibranch Pipeline using Blue Ocean,
 
