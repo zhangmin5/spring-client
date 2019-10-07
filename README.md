@@ -34,21 +34,9 @@ $ mvn dependency:copy-dependencies
 
 ## Jenkins
 
-```text
-node {
-    stage 'Checkout'
-    git branch: 'master', url: 'https://github.com/remkohdev/springclient.git'   
-    // Get the maven tool
-    // ** NOTE: This 'M3' maven tool must be configured in the global tools configuration
-    def mvnHome = tool 'M3'
-    
-    stage 'Build'
-    sh "${mvnHome}/bin/mvn -f pom.xml clean install -DskipTests"
- 
-    stage 'Test'
-    sh "${mvnHome}/bin/mvn -f pom.xml test"
-}
-```
+The `Jenkinsfile` is written for a Source-to-Image (S2I) deployment to OpenShift 3.11.
+
+Lab coming soon...
 
 
 ## Docs
