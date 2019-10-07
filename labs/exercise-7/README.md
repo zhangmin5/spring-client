@@ -90,6 +90,19 @@
 		![Jenkins - Run Pipeline](../images/jenkins-run-pipeline.png)
 
 	* Immediately, a build is triggered,
+	* You should see a successful build of the pipeline,
+
+		![Jenkins - Pipeline Success](../images/jenkins-pipeline-success.png)
+
+	* If an error occurs, you can debug the pipeline,
+	* A red cross on a stage, will indicate the pipeline broke in that stage, 
+	* Unfold the step in the stage, to see the log output,
+
+		![Jenkins - Error 1](../images/jenkins-error-1.png)
+
+		![Jenkins - Error 2](../images/jenkins-error-2.png)
+
+
 	* If you're interested, review the pipeline settings:
     	* Click the Configure option,
     	* Review the settings,
