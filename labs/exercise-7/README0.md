@@ -94,7 +94,10 @@
     	* Configure the `Name` to be `M3`, check the option `Install automatically` and select version `3.6.2`,
     	* Click `Save`,
 
-4. Alternatively, instead of using the Blue Ocean editor to create the pipeline, you can create a pipeline using the regular Jenkins editor, here are the instructions:
+
+## Note to Lab
+
+In the Lab you will create a Multibranch Pipeline using the Blue Ocean editor. Alternatively, instead of using the Blue Ocean editor, you can create a pipeline using the regular Jenkins editor, here are the instructions:
 
 	* Go to the Jenkins Dashboard,
 	* Click `New Item`,
