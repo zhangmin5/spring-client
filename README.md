@@ -2,6 +2,13 @@
 
 This application demonstrates simple examples for how to use Spring Boot, Spring MVC and Spring for REST APIs and Spring Service.
 
+## Lab
+
+A Lab or Workshop accompanies this application:
+
+* Setup and configuration instructions, see [labs/exercise-7/README0.md](labs/exercise-7/README0.md),
+* Lab: Deploying a Spring Boot App using with Jenkinsfile Using Source-to-Image (S2I) in Jenkings on Openshift, see [labs/exercise-7/README.md](labs/exercise-7/README.md), 
+
 ## Run
 
 Using the Maven Wrapper,
