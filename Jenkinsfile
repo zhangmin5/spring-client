@@ -3,27 +3,20 @@ pipeline {
     label 'maven'
   }  
   stages {
-    stage('Setup') {
+    stage('Login') {
       steps {
         withCredentials([usernamePassword(
 		  credentialsId: 'openshift-login-api-token', 
 		  usernameVariable: 'USERNAME',
 		  passwordVariable: 'PASSWORD',
 		)]) {
-	          sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
+	        sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
 		}
       }
     }
     stage('Delete Project') {
       steps {
-        withCredentials([usernamePassword(
-          credentialsId: 'openshift-login-api-token', 
-          usernameVariable: 'USERNAME',
-          passwordVariable: 'PASSWORD',
-        )]) {
-          sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
           sh 'oc delete project springclient-ns'
-        }
       }
     }
     stage('Maven Build') {
