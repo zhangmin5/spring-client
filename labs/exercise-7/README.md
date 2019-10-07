@@ -22,7 +22,30 @@
 	* Copy the token, we need it to create our Jenkins pipeline,
 
 
-4. Create a Multibranch Pipeline using Blue Ocean,
+4. Configure Jenkins
+
+	* Go to the Jenkins Administration dashboard, 
+
+		![Jenkins Administration dashboard](../images/jenkins-admin.png)
+
+	* Click `Credentials`, or 
+	* Go to Jenkins > Manage Jenkins > Configure Credentials
+	* The Jenkinsfile expects a token credential to be available named `openshift-login-api-token`,
+	* Go to `Credentials` > `System`,
+	* In the `System` view, select the dropdown for `Global credentials (unrestricted)`,
+
+		![Jenkins Add Credentials](../images/jenkins-credentials-system-add.png)
+
+	* Click `Add credentials`,
+    	* For `Kind` select `Username with password`,
+    	* For `Username` enter `token`,
+    	* For `Password` past the personal access token you created in your Github account (you also need the personal access token in the next step, so keep it at hand),
+    	* For `ID` enter `openshift-login-api-token`, which is the ID that the Jenkinsfile will look for,
+    	* For `Description` enter `openshift login api token`,
+    	* Click `OK`,
+
+
+5. Create a Multibranch Pipeline using Blue Ocean,
 
 	* In the Jenkins Dashboard, click `Open Blue Ocean` to open the Blue Ocean editor,
 	* In the `Welcome to Jenkins` popup window, click the `Create a new Pipeline` button, or click the `New Pipeline` button,
