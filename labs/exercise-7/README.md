@@ -11,18 +11,8 @@
 
 	* Review the Jenkinsfile that is included in the Spring Client repository,
 
- 
-3. Create a Personal Access Token to Access the Github API
 
-	* Go to your Github account > Settings > Developer settings > [Personal access tokens](https://github.com/settings/tokens),
-	* Click `Generate new token`,
-	* Under `Note` add `github-access-token-for-jenkins-on-openshift`,
-	* Select the scopes for `repo`, `read:repo_hook`, and `user`,
-	* Click `Generate token`,
-	* Copy the token, we need it to create our Jenkins pipeline,
-
-
-4. Configure Jenkins
+3. Configure Jenkins
 
 	* Go to the OpenShift web console,
   	* From the logged in user profile dropdown, click the `Copy Login Command`,
@@ -59,6 +49,17 @@
     	* Click `OK`,
 
 			![Jenkins Add Credentials](../images/jenkins-new-credentials.png)
+
+
+4. Create a Personal Access Token to Access the Github API
+
+	* Go to your Github account > Settings > Developer settings > [Personal access tokens](https://github.com/settings/tokens),
+	* Click `Generate new token`,
+	* Under `Note` add `github-access-token-for-jenkins-on-openshift`,
+	* Select the scopes for `repo`, `read:repo_hook`, and `user`,
+	* Click `Generate token`,
+	* Copy the token, we need it to create our Jenkins pipeline,
+
 
 5. Create a Multibranch Pipeline using Blue Ocean,
 
