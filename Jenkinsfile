@@ -10,8 +10,8 @@ pipeline {
 	          	usernameVariable: 'USERNAME',
 	        	passwordVariable: 'PASSWORD',
 	        )]) {
-                  sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
-                  sh 'oc import-image redhat-openjdk-18/openjdk18-openshift:1.6 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6 --confirm'
+                sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
+                sh 'oc import-image redhat-openjdk-18/openjdk18-openshift:1.6 --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6 --confirm'
 	        }
         }
       }
@@ -22,8 +22,8 @@ pipeline {
           	usernameVariable: 'USERNAME',
         	passwordVariable: 'PASSWORD',
           )]) {
-                  sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
-                  sh 'oc delete project springclient-ns'
+              sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
+              sh 'oc delete project springclient-ns'
           }
         }
       }
@@ -42,27 +42,33 @@ pipeline {
 	  stage('Create Project') {
 	  	steps {
 	  		echo 'Create Project'
-	  			openshift.withCluster() {
-	  				sh 'oc new-project springclient-ns'
-	  				sh 'oc project springclient-ns'
-                	echo "Using project: ${openshift.project()}"
-	  			}
+	  		script {
+  			openshift.withCluster() {
+  				sh 'oc new-project springclient-ns'
+  				sh 'oc project springclient-ns'
+            	echo "Using project: ${openshift.project()}"
+  			}
+  			}
 	  	}
 	  }
 	  stage('Deploy') {
 		steps {
 			echo 'Deploy application'
-                openshift.withCluster() {
-                  sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
-                }
+			script {
+            openshift.withCluster() {
+              sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
+            }
+            }
 		}
 	  }
 	  stage('Expose') {
 		steps {
 			echo 'Expose Route'
-                openshift.withCluster() {
-                	  sh 'oc expose svc/springclient'
-                }
+			script {
+            openshift.withCluster() {
+            	  sh 'oc expose svc/springclient'
+            }
+            }
 		}
 	  }
 	}
