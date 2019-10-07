@@ -40,6 +40,9 @@
 
 	* Click `Connect`,
 	* Select the organization to where you forked the Spring Client repository,
+
+		![Jenkins - Choose a repository](../images/github-token-choose-repo.png)
+
 	* Search for and select the `spring-client` repo,
 	* Click `Create Pipeline`,
 
