@@ -43,11 +43,11 @@ pipeline {
 	  	steps {
 	  		echo 'Create Project'
 	  		script {
-  			openshift.withCluster() {
-  				sh 'oc new-project springclient-ns'
-  				sh 'oc project springclient-ns'
-            	echo "Using project: ${openshift.project()}"
-  			}
+	  			openshift.withCluster() {
+	  				sh 'oc new-project springclient-ns'
+	  				sh 'oc project springclient-ns'
+	            	echo "Using project: ${openshift.project()}"
+	  			}
   			}
 	  	}
 	  }
@@ -55,9 +55,9 @@ pipeline {
 		steps {
 			echo 'Deploy application'
 			script {
-            openshift.withCluster() {
-              sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
-            }
+	            openshift.withCluster() {
+	              sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
+	            }
             }
 		}
 	  }
@@ -65,9 +65,9 @@ pipeline {
 		steps {
 			echo 'Expose Route'
 			script {
-            openshift.withCluster() {
-            	  sh 'oc expose svc/springclient'
-            }
+	            openshift.withCluster() {
+	            	  sh 'oc expose svc/springclient'
+	            }
             }
 		}
 	  }
