@@ -24,13 +24,27 @@
 
 4. Configure Jenkins
 
+	* Go to the OpenShift web console,
+  	* From the logged in user profile dropdown, click the `Copy Login Command`,
+
+		![OpenShift Copy Login Command](../images/openshift-copy-login-command.png)
+
+	* The command should look like,
+
+		```text
+		oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=aaHYcMwUyuasfMaS45aWiHfy_Kas5YUa67YTA1AxsNI
+		```
+
+	* Copy the OpenShift API token value, e.g. `aaHYcMwUyuasfMaS45aWiHfy_Kas5YUa67YTA1AxsNI`,
+
+
 	* Go to the Jenkins Administration dashboard, 
 
 		![Jenkins Administration dashboard](../images/jenkins-admin.png)
 
 	* Click `Credentials`, or 
 	* Go to Jenkins > Manage Jenkins > Configure Credentials
-	* The Jenkinsfile expects a token credential to be available named `openshift-login-api-token`,
+	* The Jenkinsfile expects the OpenShift API token credential to be available named `openshift-login-api-token`,
 	* Go to `Credentials` > `System`,
 	* In the `System` view, select the dropdown for `Global credentials (unrestricted)`,
 
@@ -39,7 +53,7 @@
 	* Click `Add credentials`,
     	* For `Kind` select `Username with password`,
     	* For `Username` enter `token`,
-    	* For `Password` past the personal access token you created in your Github account (you also need the personal access token in the next step, so keep it at hand),
+    	* For `Password` paste the OpenShift API token from the OpenShift web console login command,
     	* For `ID` enter `openshift-login-api-token`, which is the ID that the Jenkinsfile will look for,
     	* For `Description` enter `openshift login api token`,
     	* Click `OK`,
