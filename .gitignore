@@ -4,3 +4,4 @@ target/
 .mvn/
 .classpath
 .project
+.DS_Store

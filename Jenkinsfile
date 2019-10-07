@@ -15,7 +15,7 @@ pipeline {
 	        }
         }
       }
-      stage('Clean Project') {
+      stage('Delete Project') {
         steps {
           withCredentials([usernamePassword(
           	credentialsId: 'openshift-login-api-token', 
@@ -33,7 +33,7 @@ pipeline {
 			sh 'mvn clean install -DskipTests=true'
 		}
 	  }
-	  stage('Unit Tests') {
+	  stage('Run Unit Tests') {
 		steps {
 			echo 'Run unit tests'
 			sh 'mvn test'
