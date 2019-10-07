@@ -99,17 +99,17 @@
 
 In the Lab you will create a Multibranch Pipeline using the Blue Ocean editor. Alternatively, instead of using the Blue Ocean editor, you can create a pipeline using the regular Jenkins editor, here are the instructions:
 
-	* Go to the Jenkins Dashboard,
-	* Click `New Item`,
-	* Enter an item name: `spring-client`,
-	* Select `Pipeline`,
-	* Click `OK`,
+* Go to the Jenkins Dashboard,
+* Click `New Item`,
+* Enter an item name: `spring-client`,
+* Select `Pipeline`,
+* Click `OK`,
 
-	* In the `General` tab, select `Github Project`,
-	* In the `Project url` enter `https://github.com/<username>/spring-client.git`,
-	* Under `Build Triggers`, select the option for `GitHub hook trigger for GITScm polling`,
-	
-	* Jenkins Pipeline supports two syntaxes, Declarative (introduced in Pipeline 2.5) and Scripted Pipeline,
-	* Under `Pipeline`, in the `Pipeline script` box, paste the content of the `Jenkinsfile` included in the `sproing-client` repository, using `scripted pipeline` syntax, or select the ... option.
-	* Click `Save`,
-	* Click `Build Now`,
+* In the `General` tab, select `Github Project`,
+* In the `Project url` enter `https://github.com/<username>/spring-client.git`,
+* Under `Build Triggers`, select the option for `GitHub hook trigger for GITScm polling`,
+
+* Jenkins Pipeline supports two syntaxes, Declarative (introduced in Pipeline 2.5) and Scripted Pipeline,
+* Under `Pipeline`, in the `Pipeline script` box, paste the content of the `Jenkinsfile` included in the `sproing-client` repository, using `scripted pipeline` syntax, or select the ... option.
+* Click `Save`,
+* Click `Build Now`,

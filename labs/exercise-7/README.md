@@ -22,7 +22,7 @@
 	* Copy the token, we need it to create our Jenkins pipeline,
 
 
-3. Create a Multibranch Pipeline using Blue Ocean,
+4. Create a Multibranch Pipeline using Blue Ocean,
 
 	* In the Jenkins Dashboard, click `Open Blue Ocean` to open the Blue Ocean editor,
 	* In the `Welcome to Jenkins` popup window, click the `Create a new Pipeline` button, or click the `New Pipeline` button,
