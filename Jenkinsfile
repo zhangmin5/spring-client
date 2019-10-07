@@ -70,6 +70,14 @@ pipeline {
 		          )]) {
                     sh "oc login https://c100-e.us-south.containers.cloud.ibm.com:30403 --token=${PASSWORD}"
                     sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=target/hello.jar\''
+                    echo '=====>1'
+                    sh 'pwd'
+                    echo '=====>2'
+                    sh 'ls -al' 
+                    echo '=====>3'
+                    sh 'ls -al /' 
+                    echo '=====>4'
+                    sh 'ls -al ..' 
                   }
                 }
             }
