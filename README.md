@@ -8,7 +8,7 @@ A Lab or Workshop accompanies this application:
 
 * Setup and configuration instructions, see [labs/exercise-7/README0.md](labs/exercise-7/README0.md),
 * Lab: Deploying a Spring Boot App using with Jenkinsfile Using Source-to-Image (S2I) in Jenkings on Openshift, see [labs/exercise-7/README.md](labs/exercise-7/README.md), 
-* Extra: [Indepth Review of the Jenkinsfile](labs/exercise-7/indepth-review-jenkinsfile.md),
+* Extra: [Indepth Review of the Jenkinsfile](labs/exercise-7/sindepth-review-jenkinsfile.md),
 
 ## Run
 
@@ -54,3 +54,5 @@ See [Java: Get Started with Spring Boot](https://medium.com/nycdev/big-java-get-
 ## TODO
 
 * Replace the 'oc' syntax for the [OpenShift command line interface (CLI)](https://docs.openshift.com/container-platform/3.11/cli_reference/index.html) by the syntax used for the [OpenShift Jenkins Pipeline (DSL) Plugin](https://github.com/openshift/jenkins-client-plugin).
+* Another TODO, add an `openshift.selector().exists()` condition, before deleting. Currently there is manual step required to make sure the project exists. In addition, if deleting the project resources has not completed fully, the create project will also become an issue. In other words, not fool proof right now.
+* The `oc new-app` takes a full path URI to the base image, but there has to be a way to reference this by tag and perhaps use the `oc import-image` as a separate step to make sure it exists. Didn't have time to fix this part.
