@@ -87,6 +87,8 @@
 
 3. Configure Jenkins
 
+	* 
+	* 
 	* Add Maven,
     	* Go to Jenkins > Manage Jenkins > Global Tools Configuration,
     	* In the `Maven` section, click `Maven Installations`,
