@@ -1,4 +1,4 @@
-# Deploying a Spring Boot App using with Jenkinsfile Using Source-to-Image (S2I) in Jenkings on Openshift
+# Deploying a Spring Boot App using Pipeline Strategy with Jenkings on Openshift
 
 
 1. Create a fork of the `spring-client` repository,
