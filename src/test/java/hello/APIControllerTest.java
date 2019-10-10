@@ -21,9 +21,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = APIController.class, secure = false)
 public class APIControllerTest {
-
-	//@MockBean
-	//private MessageService messageService;
 	
 	@Autowired
 	private MockMvc mockMvc;

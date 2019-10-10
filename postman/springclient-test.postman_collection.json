@@ -10,6 +10,33 @@
 			"item": [
 				{
 					"name": "/hello",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "97d49d35-f620-430c-80ed-2052060dd6db",
+								"exec": [
+									"pass = true;",
+									"fail = false;",
+									"try {",
+									"    resp = JSON.parse(pm.response.text());",
+									"    pm.test(\"Check response to have status 200\", function () {",
+									"        pm.response.to.have.status(200);",
+									"    });",
+									"    pm.test(\"Check response includes message\", function () {",
+									"        pm.expect(pm.response.text()).to.include(\"message\");",
+									"    });",
+									"    pm.globals.set(\"env_message\", resp[\"message\"]);  ",
+									"}",
+									"catch(err) {",
+									"    tests[\"Parse response JSON or tests initialisation\"] = fail;",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
