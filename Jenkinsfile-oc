@@ -1,0 +1,49 @@
+pipeline {
+  agent {
+    label 'maven'
+  }
+  environment {
+    LOGIN_URL = 'https://c107-e.us-south.containers.cloud.ibm.com'
+    LOGIN_PORT = '31608'
+  }  
+  stages {
+    stage('Preamble') {
+        steps {
+            script {
+                openshift.withCluster() {
+                    openshift.withProject() {
+                        echo "Using project: ${openshift.project()}"
+                    }
+                }
+            }
+        }
+    }
+    stage('Delete Project') {
+        steps {
+          sh 'oc delete project springclient-ns'
+        }
+    }
+    stage('Maven Build') {
+        steps {
+          echo 'Build jar file'
+          sh 'mvn clean install -DskipTests=true'
+        }
+    }
+    stage('Run Unit Tests') {
+        steps {
+          echo 'Run unit tests'
+          sh 'mvn test'
+        }
+    }
+    stage('Create Project') {
+        steps {
+          echo 'Create Project'
+          script {
+            sh 'oc new-project springclient-ns'
+            sh 'oc project springclient-ns'
+            echo "Using project: ${openshift.project()}"
+          }
+        }
+    }      
+  }
+}
