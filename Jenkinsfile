@@ -2,6 +2,10 @@ pipeline {
   agent {
     label 'maven'
   }
+  environment {
+    LOGIN_URL = 'https://c107-e.us-south.containers.cloud.ibm.com'
+    LOGIN_PORT = '31608'
+  }  
   stages {
     stage('Login') {
       steps {
@@ -10,7 +14,7 @@ pipeline {
           		  usernameVariable: 'USERNAME',
           		  passwordVariable: 'PASSWORD',
           		)]) {
-            sh "oc login ${LOGIN_URL}:${LOGIN_PORT} --token=${PASSWORD}"
+            sh "oc login ${env.LOGIN_URL}:${env.LOGIN_PORT} --token=${PASSWORD}"
           }
 
         }
@@ -61,9 +65,5 @@ pipeline {
 
         }
       }
-    }
-    environment {
-      LOGIN_URL = 'https://c107-e.us-south.containers.cloud.ibm.com'
-      LOGIN_PORT = '31608'
     }
   }
