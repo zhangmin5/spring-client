@@ -5,13 +5,14 @@ pipeline {
   environment {
     LOGIN_URL = 'https://c107-e.us-south.containers.cloud.ibm.com'
     LOGIN_PORT = '31608'
+    PROJECT = 'springclient-ns'
   }  
   stages {
     stage('Preamble') {
         steps {
             script {
                 openshift.withCluster() {
-                    openshift.withProject() {
+                    openshift.withProject(${PROJECT}) {
                         echo "Using project: ${openshift.project()}"
                     }
                 }
