@@ -4,60 +4,26 @@ pipeline {
   }
   stages {
     stage('Preamble') {
-        steps {
-            script {
-                openshift.withCluster() {
-                    openshift.withProject("${env.PROJECT}") {
-                        echo "Using project: ${openshift.project()}"
-                    }
-                }
+      steps {
+        script {
+          openshift.withCluster() {
+            openshift.withProject("${env.PROJECT}") {
+              echo "Using project: ${openshift.project()}"
             }
+          }
         }
-    }
-    stage('Delete Project') {
-        steps {
-            script {
-                openshift.withCluster() {
-                    echo "1"
-                    openshift.create("project", "${env.PROJECT}")
-                    echo "1-1"
-                    openshift.withProject("${env.PROJECT}") {
-                        try {
-                            if(openshift.selector("project", "${env.PROJECT}").exists()){
-                                echo "${env.PROJECT} exists"
-                            }else{
-                                echo "${env.PROJECT} does not exist"
-                            }
-                        } catch(e) {
-                            error "Missing ${env.PROJECT} or RBAC Policy for project"
-                        }
-                        echo "2"
-                        openshift.selector("project", "${PROJECT}").delete()
-                        echo "2-1"
-                        openshift.withProject("${env.PROJECT}") {
-                            echo "3"
-                            openshift.selector("project", "${PROJECT}").delete()
-                            echo "4"
-                        }
-                        echo "5"
-                    }
-                }
-            }
-        }
-    }
-    stage('Create Project') {
-        steps {
-            script {
-                openshift.withCluster() {
-                    openshift.create("project", "${env.PROJECT}")
-                }
-            }
-        }
+      }
     }
     stage('Maven Build') {
         steps {
-          echo 'Build jar file'
-          sh 'mvn clean install -DskipTests=true'
+          script {
+            openshift.withCluster() {
+              openshift.withProject("${env.PROJECT}") {
+                echo 'Build jar file'
+                sh 'mvn clean install -DskipTests=true'
+              }
+            }
+          }
         }
     }
     stage('Run Unit Tests') {
