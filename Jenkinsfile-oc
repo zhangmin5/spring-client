@@ -18,7 +18,13 @@ pipeline {
         steps {
             script {
                 openshift.withCluster() {
-                    openshift.selector("project", "${PROJECT}").delete()
+                    def projectExists = openshift.selector("project", "${PROJECT}").exists()
+                    if (projectExists) {
+                        echo "${PROJECT} exists"
+                        openshift.selector("project", "${PROJECT}").delete()
+                    } else {
+                        echo "${PROJECT} does not exist"
+                    }
                 }
             }
         }
