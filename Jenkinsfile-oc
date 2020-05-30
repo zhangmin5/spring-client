@@ -18,8 +18,12 @@ pipeline {
         steps {
             script {
                 openshift.withCluster() {
+                    echo "1"
                     openshift.withProject("${env.PROJECT}") {
-                        def projectExists = openshift.selector("project", "${env.PROJECT}").exists()
+                        echo "2"
+                        def currentProject = openshift.selector("project", "${env.PROJECT}")
+                        echo "currentProject ${currentProject}"
+                        def projectExists = currentProject.exists()
                         echo "${env.PROJECT} ${projectExists}"
                         if (projectExists) {
                             echo "${env.PROJECT} exists"
