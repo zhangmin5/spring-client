@@ -18,9 +18,18 @@ pipeline {
         steps {
             script {
                 openshift.withCluster() {
-                    openshift.withProject() {
-                        openshift.selector("project", "springclient-ns").delete()
+                    openshift.withProject("${PROJECT}") {
+                        openshift.selector("project", "${PROJECT}").delete()
                     }
+                }
+            }
+        }
+    }
+    stage('Create Project') {
+        steps {
+            script {
+                openshift.withCluster() {
+                    openshift.create("project", "${PROJECT}")
                 }
             }
         }
