@@ -18,9 +18,7 @@ pipeline {
         steps {
             script {
                 openshift.withCluster() {
-                    openshift.withProject("${PROJECT}") {
-                        openshift.selector("project", "${PROJECT}").delete()
-                    }
+                    openshift.selector("project", "${PROJECT}").delete()
                 }
             }
         }
