@@ -1,4 +1,7 @@
 pipeline {
+  agent {
+      label: 'spring-client-1'
+  }
   stages {
     stage('Preamble') {
         steps {
