@@ -20,7 +20,7 @@ pipeline {
                 openshift.withCluster() {
                     echo "1"
                     try {
-                        if(openshift.selector("projects", "${env.PROJECT}").exists()){
+                        if(openshift.selector("project", "${env.PROJECT}").exists()){
                             echo "${env.PROJECT} exists"
                         }else{
                             echo "${env.PROJECT} does not exist"
@@ -29,9 +29,11 @@ pipeline {
                         error "Missing ${env.PROJECT} or RBAC Policy for project"
                     }
                     echo "2"
+                    openshift.selector("project", "${PROJECT}").delete()
+                    echo "2-1"
                     openshift.withProject("${env.PROJECT}") {
                         echo "3"
-                        openshift.selector("projects", "${PROJECT}").delete()
+                        openshift.selector("project", "${PROJECT}").delete()
                         echo "4"
                     }
                     echo "5"
