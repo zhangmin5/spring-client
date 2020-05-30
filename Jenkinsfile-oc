@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label 'spring-client'
+    label 'mavens'
   }
   stages {
     stage('Preamble') {
