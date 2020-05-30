@@ -21,8 +21,14 @@ pipeline {
                     echo "1"
                     openshift.withProject("${env.PROJECT}") {
                         echo "2 ${env.PROJECT}"
-                        def currentProject = openshift.selector("project", "${env.PROJECT}")
+                        def currentProject = openshift.selector("projects", "${env.PROJECT}")
                         echo "currentProject ${currentProject}"
+
+                        if (openshift.selector("projects", "${env.PROJECT}").exists()) { 
+                            openshift.selector("projects", "${env.PROJECT}").delete()
+                        }
+
+
                         def projectExists = currentProject.exists()
                         echo "${env.PROJECT} ${projectExists}"
                         if (projectExists) {
