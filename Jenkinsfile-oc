@@ -20,7 +20,13 @@ pipeline {
     }
     stage('Delete Project') {
         steps {
-          sh 'oc delete project springclient-ns'
+            script {
+                openshift.withCluster() {
+                    openshift.withProject() {
+                        openshift.selector("project", "springclient-ns").delete()
+                    }
+                }
+            }
         }
     }
     stage('Maven Build') {
