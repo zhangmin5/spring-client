@@ -19,6 +19,8 @@ pipeline {
             script {
                 openshift.withCluster() {
                     echo "1"
+                    openshift.create("project", "${env.PROJECT}")
+                    echo "1-1"
                     openshift.withProject("${env.PROJECT}") {
                         try {
                             if(openshift.selector("project", "${env.PROJECT}").exists()){
