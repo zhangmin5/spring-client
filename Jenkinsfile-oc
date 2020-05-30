@@ -7,7 +7,7 @@ pipeline {
         steps {
             script {
                 openshift.withCluster() {
-                    openshift.withProject("${PROJECT}") {
+                    openshift.withProject("${env.PROJECT}") {
                         echo "Using project: ${openshift.project()}"
                     }
                 }
@@ -18,12 +18,13 @@ pipeline {
         steps {
             script {
                 openshift.withCluster() {
-                    def projectExists = openshift.selector("project", "${PROJECT}").exists()
+                    def projectExists = openshift.selector("project", "${env.PROJECT}").exists()
+                    echo "${env.PROJECT} ${projectExists}"
                     if (projectExists) {
-                        echo "${PROJECT} exists"
+                        echo "${env.PROJECT} exists"
                         openshift.selector("project", "${PROJECT}").delete()
                     } else {
-                        echo "${PROJECT} does not exist"
+                        echo "${env.PROJECT} does not exist"
                     }
                 }
             }
@@ -33,7 +34,7 @@ pipeline {
         steps {
             script {
                 openshift.withCluster() {
-                    openshift.create("project", "${PROJECT}")
+                    openshift.create("project", "${env.PROJECT}")
                 }
             }
         }
