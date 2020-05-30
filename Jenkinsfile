@@ -10,7 +10,7 @@ pipeline {
 		  usernameVariable: 'USERNAME',
 		  passwordVariable: 'PASSWORD',
 		)]) {
-		sh "oc login ${LOGIN_URL} --token=${PASSWORD}"
+		sh "oc login ${LOGIN_URL}:${LOGIN_PORT} --token=${PASSWORD}"
 		}
       }
     }
