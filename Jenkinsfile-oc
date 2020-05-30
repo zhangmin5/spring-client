@@ -20,7 +20,7 @@ pipeline {
                 openshift.withCluster() {
                     echo "1"
                     openshift.withProject("${env.PROJECT}") {
-                        echo "2"
+                        echo "2 ${env.PROJECT}"
                         def currentProject = openshift.selector("project", "${env.PROJECT}")
                         echo "currentProject ${currentProject}"
                         def projectExists = currentProject.exists()
