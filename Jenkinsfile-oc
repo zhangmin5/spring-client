@@ -1,6 +1,6 @@
 pipeline {
   agent {
-      label: 'spring-client-1'
+    label 'spring-client'
   }
   stages {
     stage('Preamble') {
@@ -45,16 +45,6 @@ pipeline {
           echo 'Run unit tests'
           sh 'mvn test'
         }
-    }
-    stage('Create Project') {
-        steps {
-          echo 'Create Project'
-          script {
-            sh 'oc new-project springclient-ns'
-            sh 'oc project springclient-ns'
-            echo "Using project: ${openshift.project()}"
-          }
-        }
-    }      
+    }    
   }
 }
