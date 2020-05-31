@@ -5,7 +5,7 @@ pipeline {
   environment {
     LOGIN_URL = 'https://c107-e.us-south.containers.cloud.ibm.com'
     LOGIN_PORT = '31608'
-    PROJECT = 'springclient2-ns'
+    PROJECT = 'springclient-ns'
   }   
   stages {
     stage('Preamble') {
@@ -19,14 +19,6 @@ pipeline {
         }
       }
     }
-    stage('Delete Project') {
-      steps {
-        script {
-          openshift.withCluster() {
-              sh "oc delete project ${env.PROJECT}"
-          }
-        }
-    }
     stage('Maven Build') {
       steps {
         echo 'Build jar file'
@@ -39,43 +31,6 @@ pipeline {
         sh 'mvn test'
       }
     }
-    stage('Create Project') {
-      steps {
-        echo 'Create Project'
-        script {
-          openshift.withCluster() {
-            openshift.withProject("${env.PROJECT}") {
-              sh "oc new-project ${env.PROJECT}"
-              sh "oc project ${env.PROJECT}"
-              echo "Using project: ${openshift.project()}"
-            }
-          }
-        }
-      }
-    }
-    stage('Deploy') {
-      steps {
-        echo "Deploy application"
-        script {
-          openshift.withCluster() {
-            openshift.withProject("${env.PROJECT}") {
-              sh "oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\'"
-            }
-          }
-        }
-      }
-    }
-    stage('Expose') {
-      steps {
-        echo "Expose Route"
-        script {
-          openshift.withCluster() {
-            openshift.withProject("${env.PROJECT}") {
-              sh "oc expose svc/springclient"
-            }
-          }
-        }
-      }
-    }
+    
   }
 }
