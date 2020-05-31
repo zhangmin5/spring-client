@@ -47,22 +47,11 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject("${env.PROJECT}") {
+              echo "1"
               openshift.selector("all", [  'app' : 'springclient' ]).delete()
-              
-              openshift.newApp('registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client', "--name=springclient", "--strategy=source", "--allow-missing-images", "--build-env=\'JAVA_APP_JAR=hello.jar\'")
-
-            }
-          }
-        }
-      }
-    }
-    stage('Expose') {
-      steps {
-        echo "Expose Route"
-        script {
-          openshift.withCluster() {
-            openshift.withProject("${env.PROJECT}") {
-              sh "oc expose svc/springclient"
+              echo "2"
+              openshift.newApp('registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client', "--name=springclient", "--strategy=source", "--allow-missing-images", "--build-env=\'JAVA_APP_JAR=hello.jar\'").narrow('svc').expose()
+              echo "3"
             }
           }
         }
