@@ -31,7 +31,18 @@ pipeline {
         sh 'mvn test'
       }
     }
-    
+    stage('Deploy') {
+      steps {
+        echo "Deploy application"
+        script {
+          openshift.withCluster() {
+            openshift.withProject("${env.PROJECT}") {
+              
+            }
+          }
+        }
+      }
+    }
     stage('Expose') {
       steps {
         echo "Expose Route"
