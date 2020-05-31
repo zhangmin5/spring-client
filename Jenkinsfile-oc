@@ -32,5 +32,17 @@ pipeline {
       }
     }
     
+    stage('Expose') {
+      steps {
+        echo "Expose Route"
+        script {
+          openshift.withCluster() {
+            openshift.withProject("${env.PROJECT}") {
+              sh "oc expose svc/springclient"
+            }
+          }
+        }
+      }
+    }
   }
 }
