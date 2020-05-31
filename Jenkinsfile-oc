@@ -22,7 +22,7 @@ pipeline {
     stage('Maven Build') {
       steps {
         echo 'Build jar file'
-        mvn 'clean install -DskipTests=true'
+        maven 'clean install -DskipTests=true'
       }
     }
     stage('Run Unit Tests') {
