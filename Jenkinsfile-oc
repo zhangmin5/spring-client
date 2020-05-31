@@ -47,7 +47,9 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject("${env.PROJECT}") {
-              sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
+
+              openshift.newApp('registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client', "--name=springclient", "--strategy=source", "--allow-missing-images", "--build-env=\'JAVA_APP_JAR=hello.jar\'")
+
             }
           }
         }
