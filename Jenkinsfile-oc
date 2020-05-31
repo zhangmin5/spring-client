@@ -24,11 +24,9 @@ pipeline {
         echo 'Build jar file'
         script {
           maven {
-            goals('-e clean install')
-            mavenOpts('-Xms256m')
-            mavenOpts('-Xmx512m')
+            goals('clean')
+            goals('install')
             properties skipTests: true
-            mavenInstallation('Maven 3.6.3')
           }
         }
       }
@@ -36,7 +34,11 @@ pipeline {
     stage('Run Unit Tests') {
       steps {
         echo 'Run unit tests'
-        sh 'mvn test'
+        script {
+          maven {
+            goals('test')
+          }
+        }
       }
     }
     stage('Deploy') {
