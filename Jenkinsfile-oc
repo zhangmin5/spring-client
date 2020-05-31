@@ -41,17 +41,25 @@ pipeline {
         }
       }
     }
+    stage('Delete') {
+      steps {
+        echo "Delete application"
+        script {
+          openshift.withCluster() {
+            openshift.withProject("${env.PROJECT}") {
+              openshift.selector("all", [  'app' : 'springclient' ]).delete()
+            }
+          }
+        }
+      }
+    }
     stage('Deploy') {
       steps {
         echo "Deploy application"
         script {
           openshift.withCluster() {
             openshift.withProject("${env.PROJECT}") {
-              echo "1"
-              openshift.selector("all", [  'app' : 'springclient' ]).delete()
-              echo "2"
               openshift.newApp('registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client', "--name=springclient", "--strategy=source", "--allow-missing-images", "--build-env=\'JAVA_APP_JAR=hello.jar\'").narrow('svc').expose()
-              echo "3"
             }
           }
         }
