@@ -18,56 +18,59 @@ pipeline {
       steps {
         script {
           openshift.withCluster() {
-              sh 'oc delete project ${env.PROJECT}'
+              sh "oc delete project ${env.PROJECT}"
           }
         }
     }
     stage('Maven Build') {
-        steps {
-          script {
-            openshift.withCluster() {
-              openshift.withProject("${env.PROJECT}") {
-                echo 'Build jar file'
-                sh 'mvn clean install -DskipTests=true'
-              }
+      steps {
+        echo 'Build jar file'
+        sh 'mvn clean install -DskipTests=true'
+      }
+    }
+    stage('Run Unit Tests') {
+      steps {
+        echo 'Run unit tests'
+        sh 'mvn test'
+      }
+    }
+    stage('Create Project') {
+      steps {
+        echo 'Create Project'
+        script {
+          openshift.withCluster() {
+            openshift.withProject("${env.PROJECT}") {
+              sh "oc new-project ${env.PROJECT}"
+              sh "oc project ${env.PROJECT}"
+              echo "Using project: ${openshift.project()}"
             }
           }
         }
-    }
-    stage('Run Unit Tests') {
-        steps {
-          echo 'Run unit tests'
-          sh 'mvn test'
-        }
-    }
-    stage('Create Project') {
-        steps {
-          echo 'Create Project'
-          script {
-            sh 'oc new-project springclient-ns'
-            sh 'oc project springclient-ns'
-            echo "Using project: ${openshift.project()}"
-          }
-
-        }
+      }
     }
     stage('Deploy') {
-        steps {
-          echo 'Deploy application'
-          script {
-            sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
+      steps {
+        echo "Deploy application"
+        script {
+          openshift.withCluster() {
+            openshift.withProject("${env.PROJECT}") {
+              sh "oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\'"
+            }
           }
-
         }
       }
-      stage('Expose') {
-        steps {
-          echo 'Expose Route'
-          script {
-            sh 'oc expose svc/springclient'
+    }
+    stage('Expose') {
+      steps {
+        echo "Expose Route"
+        script {
+          openshift.withCluster() {
+            openshift.withProject("${env.PROJECT}") {
+              sh "oc expose svc/springclient"
+            }
           }
-
         }
       }
+    }
   }
 }
