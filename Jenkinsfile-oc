@@ -22,7 +22,15 @@ pipeline {
     stage('Maven Build') {
       steps {
         echo 'Build jar file'
-        maven 'clean install -DskipTests=true'
+        script {
+          maven {
+            goals('-e clean install')
+            mavenOpts('-Xms256m')
+            mavenOpts('-Xmx512m')
+            properties skipTests: true
+            mavenInstallation('Maven 3.6.3')
+          }
+        }
       }
     }
     stage('Run Unit Tests') {
