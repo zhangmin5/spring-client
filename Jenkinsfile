@@ -3,8 +3,8 @@ pipeline {
     label 'maven'
   }
   environment {
-    LOGIN_URL = 'https://c100-e.us-south.containers.cloud.ibm.com'
-    LOGIN_PORT = '30645'
+    LOGIN_URL = 'https://c107-e.us-south.containers.cloud.ibm.com'
+    LOGIN_PORT = '30287'
   }  
   stages {
     stage('Login') {
