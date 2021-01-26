@@ -1,12 +1,14 @@
 pipeline {
   agent { 
-    label 'maven'
+    docker {
+      image 'maven:3-alpine'
+      args '-v /root/.m2:/root/.m2'
+    }
   }
   environment {
     LOGIN_URL = 'https://c115-e.us-south.containers.cloud.ibm.com'
     LOGIN_PORT = '32370'
     PROJECT = 'springclient-ns'
-    MVNHOME = tool 'maven'
   }  
   stages {
     stage('Login') {
@@ -29,13 +31,13 @@ pipeline {
       stage('Maven Build') {
         steps {
           echo 'Build jar file'
-          sh '${MVNHOME}/bin/mvn clean install -DskipTests=true'
+          sh 'mvn clean install -DskipTests=true'
         }
       }
       stage('Run Unit Tests') {
         steps {
           echo 'Run unit tests'
-          sh '${MVNHOME}/bin/mvn test'
+          sh 'mvn test'
         }
       }
       stage('Create Project') {
