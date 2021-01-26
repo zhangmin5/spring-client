@@ -1,6 +1,7 @@
 pipeline {
-  agent {
-    label 'maven'
+  agent any
+  tools { 
+    maven 'maven'
   }
   environment {
     LOGIN_URL = 'https://c103-e.us-south.containers.cloud.ibm.com'
