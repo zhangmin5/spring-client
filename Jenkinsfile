@@ -2,7 +2,6 @@ pipeline {
   agent any
   tools { 
     maven 'maven' 
-    jdk 'jdk9' 
   }
   environment {
     LOGIN_URL = 'https://c115-e.us-south.containers.cloud.ibm.com'
