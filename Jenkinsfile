@@ -1,9 +1,6 @@
 pipeline {
   agent { 
-    docker {
-      image 'maven:3-alpine'
-      args '-v /root/.m2:/root/.m2'
-    }
+    label 'maven'
   }
   environment {
     LOGIN_URL = 'https://c115-e.us-south.containers.cloud.ibm.com'
