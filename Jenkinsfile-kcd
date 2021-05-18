@@ -29,5 +29,12 @@ pipeline {
         sh 'mvn test'
       }
     }
+    stage('KubernetesDeploy') {
+      kubernetesDeploy(
+        kubeconfigId: 'kubeconfig-credentials-id',
+        configs: '',
+        enableConfigSubstitution: true
+      )
+    }
   }
 }
