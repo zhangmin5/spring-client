@@ -33,7 +33,7 @@ pipeline {
       steps {
         kubernetesDeploy(
           kubeconfigId: 'kubeconfig-credentials-id',
-          configs: 'helm',
+          configs: 'helm/deployment.yaml,helm/service.yaml,helm/route.yaml',
           enableConfigSubstitution: true
         )
       }
