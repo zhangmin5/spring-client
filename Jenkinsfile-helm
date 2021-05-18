@@ -1,0 +1,39 @@
+pipeline {
+  agent any
+  tools { 
+    maven 'maven'
+  }
+  environment {
+    LOGIN_URL = 'https://c116-e.us-south.containers.cloud.ibm.com'
+    LOGIN_PORT = '32134'
+    PROJECT = 'springclient-ns'
+  }  
+  stages {
+    stage ('Initialize') {
+      steps {
+        sh '''
+          echo "PATH = ${PATH}"
+          echo "M2_HOME = ${M2_HOME}"
+        ''' 
+      }
+    }
+    stage('Maven Build') {
+      steps {
+        echo 'Build jar file'
+        sh 'mvn clean install -DskipTests=true'
+      }
+    }
+    stage('Run Unit Tests') {
+      steps {
+        echo 'Run unit tests'
+        sh 'mvn test'
+      }
+    }
+    stage('Test Helm') {
+      steps {
+        echo 'helm version'
+        sh 'helm version'
+      }
+    }
+  }
+}
