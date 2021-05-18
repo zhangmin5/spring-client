@@ -29,10 +29,13 @@ pipeline {
         sh 'mvn test'
       }
     }
-    stage('Test Helm') {
+    stage('Run Helm') {
       steps {
-        echo 'helm version'
-        sh '/usr/local/bin/helm version'
+        script {      
+          container('helm') {
+            sh 'helm version'
+          }
+        } 
       }
     }
   }
