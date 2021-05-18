@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: springclient-v1
+spec:
+  to:
+    kind: Service
+    name: springclient-v1

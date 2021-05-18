@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springclient-v1
+  labels:
+    app: springclient-v1
+    version: "1.0"
+spec:
+  selector:
+    matchLabels:
+      app: springclient-v1
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: springclient-v1
+        version: "2.0"
+    spec:
+      containers:
+      - name: springclient-v1
+        image: remkohdev/springclient:v1.0.0
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - name: http
+          containerPort: 3000

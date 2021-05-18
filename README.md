@@ -26,6 +26,16 @@ $ mvn clean install
 $ mvn spring-boot:run
 ```
 
+## Docker
+
+```bash
+DOCKERHUB_USERNAME=remkohdev
+docker image build -t springclient .
+docker login docker.io -u $DOCKERHUB_USERNAME
+docker tag springclient $DOCKERHUB_USERNAME/springclient:v1.0.0
+docker push $DOCKERHUB_USERNAME/springclient:v1.0.0
+```
+
 ## Test
 
 ```console
@@ -45,7 +55,6 @@ $ mvn dependency:copy-dependencies
 The `Jenkinsfile` is written for a Source-to-Image (S2I) deployment to OpenShift 3.11.
 
 Lab coming soon...
-
 
 ## Docs
 
