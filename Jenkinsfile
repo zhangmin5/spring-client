@@ -4,8 +4,8 @@ pipeline {
     maven 'maven'
   }
   environment {
-    LOGIN_URL = 'https://c115-e.us-south.containers.cloud.ibm.com'
-    LOGIN_PORT = '32370'
+     LOGIN_URL = 'https://c109-e.us-east.containers.cloud.ibm.com'
+    LOGIN_PORT = '32644'
     PROJECT = 'springclient-ns'
   }  
   stages {
@@ -61,7 +61,7 @@ pipeline {
       steps {
         echo 'Deploy application'
         script {
-          sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/remkohdev/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
+          sh 'oc new-app --name springclient \'registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6~https://github.com/zhangmin5/spring-client\' --strategy=source --allow-missing-images --build-env=\'JAVA_APP_JAR=hello.jar\''
         }
 
       }
