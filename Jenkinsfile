@@ -4,7 +4,7 @@ pipeline {
     maven 'maven'
   }
   environment {
-     LOGIN_URL = 'https://c109-e.us-east.containers.cloud.ibm.com'
+     LOGIN_URL = 'c104-e.us-east.containers.cloud.ibm.com'
     LOGIN_PORT = '32644'
     PROJECT = 'springclient-ns'
   }  
