@@ -24,7 +24,7 @@ pipeline {
           		  usernameVariable: 'USERNAME',
           		  passwordVariable: 'PASSWORD',
           		)]) {
-          sh "oc login ${env.LOGIN_URL}:${env.LOGIN_PORT} --token='sha256~J1LCzlk2upjpuHtmsDCL8yVj6ZFePRQ7ZGn83nA1lTg'"
+          sh "oc login ${env.LOGIN_URL}:${env.LOGIN_PORT} --token='sha256~_O9aZfUuargVBecmyxIsw5FykGI9mSk2_xSxujhK-HM'"
         }
 
       }
